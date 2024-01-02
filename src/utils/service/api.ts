@@ -1,10 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { coinrankingAPI } from "./axios";
 
-
 export async function fetchCoins() {
   try {
-    const res: AxiosResponse = await axios.get(`${coinrankingAPI}/coins`);
+    const res: AxiosResponse = await coinrankingAPI.get("/coins");
 
     const data = res.data;
 
@@ -15,8 +14,6 @@ export async function fetchCoins() {
         // Axios hatası
         if (error.response) {
           console.log("Response data:", error.response.data);
-          console.log("Response status:", error.response.status);
-          console.log("Response headers:", error.response.headers);
         } else if (error.request) {
           console.log("Request:", error.request);
         } else {

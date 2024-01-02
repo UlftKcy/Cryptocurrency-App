@@ -6,7 +6,7 @@ export const coinrankingAPI = axios.create({
 
 coinrankingAPI.interceptors.request.use(
   function (config) {
-    const token = process.env.ACCESS_TOKEN;
+    const token = import.meta.env.ACCESS_TOKEN;
     config.headers["Authorization"] = `Bearer ${token}`;
     return config;
   },
