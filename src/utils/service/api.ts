@@ -1,13 +1,14 @@
 import axios, { AxiosResponse } from "axios";
 import { coinrankingAPI } from "./axios";
+import { CoinType } from "../../types";
 
 export async function fetchCoins() {
   try {
     const res: AxiosResponse = await coinrankingAPI.get("/coins");
 
-    const data = res.data;
+    const coins:CoinType[] = res.data.data.coins;
 
-    return data;
+    return coins;
 
   } catch (error) {
     if (axios.isAxiosError(error)) {

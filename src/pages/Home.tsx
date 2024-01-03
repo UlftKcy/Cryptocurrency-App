@@ -19,9 +19,8 @@ export default function Home() {
 
     return (
         <ul>
-        {/* Render your data here */}
-        {data?.coins?.map((coin) => (
-          <li key={coin.id}>{coin.name}</li>
+        {data?.map((coin) => (
+          <li key={coin.uuid}>{coin.name}</li>
         ))}
       </ul>
     )
