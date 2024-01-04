@@ -16,5 +16,5 @@ export default function Home() {
     return <span>Error: {error.message}</span>;
   }
 
-  return <CoinTable data={data} />;
+  return <CoinTable data={data}/>;
 }

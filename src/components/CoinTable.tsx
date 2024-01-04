@@ -1,8 +1,21 @@
 import Column from "antd/es/table/Column";
 import { CoinType } from "../types";
 import { Button, Flex, Image, Space, Table } from "antd";
+import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { useAppDispatch } from "../hooks/redux";
+import { addFavorite } from "../features/coins/coinSlice";
 
 export default function CoinTable({ data }: { data: CoinType[] | undefined }) {
+  const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
+  const dispatch = useAppDispatch();
+
+  const addFavoriteCoin = (uuid: string) => {
+    const coins = favoriteCoins.includes(uuid) ? favoriteCoins.filter((coin) => coin !== uuid) : [...favoriteCoins, uuid];
+    setFavoriteCoins(coins);
+    dispatch(addFavorite(uuid));
+  };
+
   return (
     <Table dataSource={data}>
       <Column
@@ -11,8 +24,19 @@ export default function CoinTable({ data }: { data: CoinType[] | undefined }) {
         key="name"
         render={(_: undefined, record: CoinType) => (
           <Space align="center" size="middle">
-            <span>{record.rank}</span>
-            <Image src={record.iconUrl} width={25} height={25}/>
+            <Button
+              danger
+              style={{ border: 0 }}
+              onClick={() => addFavoriteCoin(record.uuid)}
+              icon={
+                favoriteCoins.includes(record.uuid) ? (
+                  <HeartFilled />
+                ) : (
+                  <HeartOutlined />
+                )
+              }
+            />
+            <Image src={record.iconUrl} width={25} height={25} />
             <Flex vertical>
               <h4 style={{ fontWeight: "bold" }}>{record.name}</h4>
               <span>{record.symbol}</span>
