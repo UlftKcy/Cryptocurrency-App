@@ -3,17 +3,18 @@ import { CoinType } from "../types";
 import { Button, Flex, Image, Space, Table } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useAppDispatch } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { addFavorite } from "../features/coins/coinSlice";
 
 export default function CoinTable({ data }: { data: CoinType[] | undefined }) {
-  const [favoriteCoins, setFavoriteCoins] = useState<string[]>([]);
+  const [favoriteCoins, setFavoriteCoins] = useState<CoinType[]>([]);
   const dispatch = useAppDispatch();
+  const stateFavoriteCoins = useAppSelector(state=>state.coins.favoriteCoins);
 
-  const addFavoriteCoin = (uuid: string) => {
-    const coins = favoriteCoins.includes(uuid) ? favoriteCoins.filter((coin) => coin !== uuid) : [...favoriteCoins, uuid];
+  const addFavoriteCoin = (record: CoinType) => {
+    const coins = favoriteCoins.includes(record) ? favoriteCoins.filter((coin) => coin.uuid !== record.uuid) : [...favoriteCoins, record];
     setFavoriteCoins(coins);
-    dispatch(addFavorite(uuid));
+    dispatch(addFavorite(record));
   };
 
   return (
@@ -27,9 +28,9 @@ export default function CoinTable({ data }: { data: CoinType[] | undefined }) {
             <Button
               danger
               style={{ border: 0 }}
-              onClick={() => addFavoriteCoin(record.uuid)}
+              onClick={() => addFavoriteCoin(record)}
               icon={
-                favoriteCoins.includes(record.uuid) ? (
+                stateFavoriteCoins.includes(record) ? (
                   <HeartFilled />
                 ) : (
                   <HeartOutlined />

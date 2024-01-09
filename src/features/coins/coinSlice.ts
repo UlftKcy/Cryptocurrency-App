@@ -1,7 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { CoinType } from "../../types";
 
 type InitialState = {
-    favoriteCoins : string[]
+    favoriteCoins : CoinType[]
 }
 
 const initialState:InitialState = {
@@ -12,13 +13,13 @@ const coinSlice = createSlice({
     name:"coins",
     initialState:initialState,
     reducers:{
-        addFavorite:(state,action:PayloadAction<string>)=>{
-            const isExistedCoinIndex = state.favoriteCoins.findIndex(coin=>coin === action.payload)
+        addFavorite:(state,action:PayloadAction<CoinType>)=>{
+            const isExistedCoinIndex = state.favoriteCoins.findIndex(coin=>coin.uuid === action.payload.uuid)
             
             if(isExistedCoinIndex === -1){
                state.favoriteCoins.push(action.payload)
             }else{
-                state.favoriteCoins =  state.favoriteCoins.filter(coin=>coin !== action.payload)
+                state.favoriteCoins =  state.favoriteCoins.filter(coin=>coin.uuid !== action.payload.uuid)
             }
         }
     }
