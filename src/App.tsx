@@ -6,6 +6,12 @@ import { CSSProperties } from "react";
 
 const { Header, Content } = Layout;
 
+const layoutStyle: CSSProperties = {
+  overflow: "hidden",
+  width: "100%",
+  minHeight: "100vh",
+};
+
 const headerStyle: CSSProperties = {
   color: "#fff",
   height: 64,
@@ -15,28 +21,26 @@ const headerStyle: CSSProperties = {
   letterSpacing: "1px",
 };
 
-const layoutStyle = {
-  overflow: "hidden",
-  width: "100%",
-  minHeight: "100vh",
+const contentStyle: CSSProperties = {
+  padding: 32,
 };
 
 function App() {
   return (
     <Layout style={layoutStyle}>
-      <Content>
-        <Router>
-          <Header style={headerStyle}>
-            <Link to="/" relative="path">
-              CoinRanking
-            </Link>
-          </Header>
+      <Router>
+        <Header style={headerStyle}>
+          <Link to="/" relative="path">
+            CoinRanking
+          </Link>
+        </Header>
+        <Content style={contentStyle}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path=":uuid" element={<CoinDetail />} />
           </Routes>
-        </Router>
-      </Content>
+        </Content>
+      </Router>
     </Layout>
   );
 }
