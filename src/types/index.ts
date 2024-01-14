@@ -7,4 +7,5 @@ export interface CoinType{
     change:string,
     rank:number,
     marketCap:string,
+    sparkline:string[]
 }
