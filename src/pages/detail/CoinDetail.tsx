@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCoinByUuid } from "../utils/service/api";
+import { fetchCoinByUuid } from "../../utils/service/api";
 import { useParams } from "react-router-dom";
 import Chart from "chart.js/auto";
 import {
@@ -10,8 +10,10 @@ import {
   Tooltip,
   PointElement,
 } from "chart.js";
-import { Line } from "react-chartjs-2";
 import { Card } from "antd";
+import { useState } from "react";
+import PriceChart from "./components/PriceChart";
+import About from "./components/About";
 
 Chart.register(
   Title,
@@ -22,16 +24,30 @@ Chart.register(
   PointElement
 );
 
+const tabListNoTitle = [
+  {
+    key: "price",
+    label: "Price",
+  },
+  {
+    key: "about",
+    label: "About",
+  },
+];
+
 export default function CoinDetail() {
   const { uuid } = useParams();
+  const [activeTabKey, setActiveTabKey] = useState<string>("price");
+
+  const onTab1Change = (key: string) => {
+    setActiveTabKey(key);
+  };
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["coinDetail", uuid],
     queryFn: () => fetchCoinByUuid(uuid as string),
     enabled: !!uuid,
   });
-
-  console.log(data)
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -41,30 +57,20 @@ export default function CoinDetail() {
     return <span>Error: {error.message}</span>;
   }
 
+  if (!data) {
+    return;
+  }
+
   return (
-    <Card>
-      <Line
-        data={{
-              labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
-              datasets: [
-                {
-                  label: data?.name,
-                  data: data?.sparkline.map(item=>item),
-                },
-              ],
-              /* backgroundColor: [
-                "red",
-                "green",
-                "pink",
-                "orange",
-                "yellow",
-                "lime",
-              ], */
-              /* borderColor: "rgb(255, 99, 132)",
-              borderWidth: 1, */
-            
-        }}
-      />
+    <Card
+      style={{ width: "100%" }}
+      tabList={tabListNoTitle}
+      activeTabKey={activeTabKey}
+      onTabChange={onTab1Change}
+      hoverable
+    >
+      {activeTabKey === "price" && <PriceChart {...data} />}
+      {activeTabKey === "about" && <About {...data} />}
     </Card>
   );
 }

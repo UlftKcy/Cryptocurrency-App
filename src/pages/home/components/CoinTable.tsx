@@ -1,10 +1,10 @@
 import Column from "antd/es/table/Column";
-import { CoinType } from "../types";
+import { CoinType } from "../../../types";
 import { Button, Flex, Image, Space, Table } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { addFavorite } from "../features/coins/coinSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { addFavorite } from "../../../features/coins/coinSlice";
 
 export default function CoinTable({ data }: { data: CoinType[] | undefined }) {
   const [favoriteCoins, setFavoriteCoins] = useState<CoinType[]>([]);

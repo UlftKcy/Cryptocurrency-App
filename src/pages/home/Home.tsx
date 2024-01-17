@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCoins } from "../utils/service/api";
-import CoinTable from "../components/CoinTable";
-import { useAppSelector } from "../hooks/redux";
+import { fetchCoins } from "../../utils/service/api";
+import CoinTable from "./components/CoinTable";
+import { useAppSelector } from "../../hooks/redux";
 import { Tabs } from "antd";
 
 export default function Home() {

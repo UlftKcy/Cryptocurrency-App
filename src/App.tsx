@@ -1,6 +1,6 @@
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import CoinDetail from "./pages/CoinDetail";
+import Home from "./pages/home/Home";
+import CoinDetail from "./pages/detail/CoinDetail";
 import { Layout } from "antd";
 import { CSSProperties } from "react";
 
