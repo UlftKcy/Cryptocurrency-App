@@ -1,7 +1,26 @@
 import { Descriptions } from "antd";
-import { CoinType } from "../../../types";
+import { useQuery } from "@tanstack/react-query";
+import { fetchCoinByUuid } from "../../../utils/service/api";
 
-export default function About(data: CoinType) {
+export default function About({uuid}:{uuid:string}) {
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["coinAbout", uuid],
+    queryFn: () => fetchCoinByUuid(uuid as string),
+    enabled: !!uuid,
+  });
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    console.log(error)
+    return <span>Error: {error.message}</span>;
+  }
+
+  if (!data) {
+    return;
+  }
   const items = [
     {
       label: "Rank",

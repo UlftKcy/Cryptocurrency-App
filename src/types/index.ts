@@ -15,3 +15,7 @@ export interface CoinType {
     timestamp: string;
   };
 }
+export interface CoinHistoryType{
+  price:string;
+  timestamp: string;
+}
