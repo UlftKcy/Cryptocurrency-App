@@ -18,9 +18,9 @@ export async function fetchCoins() {
   }
 }
 
-export async function fetchCoinByUuid(uuid: string) {
+export async function fetchCoinDetail(uuid: string, timePeriod: string) {
   try {
-    const res: AxiosResponse = await coinrankingAPI.get(`/coin/${uuid}`);
+    const res: AxiosResponse = await coinrankingAPI.get(`/coin/${uuid}?timePeriod=${timePeriod}`);
     const coin: CoinType = res.data.data.coin;
     return coin;
   } catch (error) {

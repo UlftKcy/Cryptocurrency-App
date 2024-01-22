@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchCoinByUuid } from "../../utils/service/api";
+import { fetchCoinDetail } from "../../utils/service/api";
 import { useParams } from "react-router-dom";
 import Chart from "chart.js/auto";
 import {
@@ -38,22 +38,25 @@ const tabListNoTitle = [
 export default function CoinDetail() {
   const { uuid } = useParams();
   const [activeTabKey, setActiveTabKey] = useState<string>("price");
+  const [timePeriod,setTimePeriod] = useState("24h");
 
   const onTab1Change = (key: string) => {
     setActiveTabKey(key);
   };
 
   const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["coinDetail", uuid],
-    queryFn: () => fetchCoinByUuid(uuid as string),
-    enabled: !!uuid,
+    queryKey: ["coinDetail", uuid,timePeriod],
+    queryFn: () => fetchCoinDetail(uuid as string ,timePeriod as string),
+    enabled: !!uuid && !! timePeriod,
   });
+
 
   if (isLoading) {
     return <span>Loading...</span>;
   }
 
   if (isError) {
+    console.log(error)
     return <span>Error: {error.message}</span>;
   }
 
@@ -69,7 +72,7 @@ export default function CoinDetail() {
       onTabChange={onTab1Change}
       hoverable
     >
-      {activeTabKey === "price" && <PriceChart {...data} />}
+      {activeTabKey === "price" && <PriceChart data={data} timePeriod={timePeriod} setTimePeriod={setTimePeriod}/>}
       {activeTabKey === "about" && <About {...data} />}
     </Card>
   );
