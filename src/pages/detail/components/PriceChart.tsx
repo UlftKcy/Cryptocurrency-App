@@ -1,9 +1,9 @@
 import { Line } from "react-chartjs-2";
-/* import { CoinType } from "../../../types"; */
 import { Divider, Flex, Radio } from "antd";
 import { Children, useState } from "react";
 import { fetchCoinByHistory } from "../../../utils/service/api";
 import { useQuery } from "@tanstack/react-query";
+import { format, fromUnixTime } from 'date-fns';
 
 const timePeriods = [
   "1h",
@@ -33,7 +33,6 @@ export default function PriceChart({ uuid }: { uuid: string }) {
   }
 
   if (isError) {
-    console.log(error);
     return <span>Error: {error.message}</span>;
   }
 
@@ -59,16 +58,15 @@ export default function PriceChart({ uuid }: { uuid: string }) {
       <Divider />
       <Line
         data={{
-          labels: data?.map((time) =>
-            new Date(Number(time.timestamp) * 1000).toLocaleTimeString()
+          labels: data?.map((item) =>
+            format(fromUnixTime(Number(item.timestamp)),"HH:mm")
           ),
           datasets: [
             {
-              /* label: data?.name, */
               data: data.map((item) => item.price),
               fill: true,
-              borderColor: "#E5E5E5",
-              backgroundColor: "#E5E5E5",
+              borderColor: "#002358",
+              backgroundColor: "#D6E6FF",
             },
           ],
         }}
@@ -78,6 +76,11 @@ export default function PriceChart({ uuid }: { uuid: string }) {
               display: false,
             },
           },
+          scales:{
+            x:{
+              reverse:true,
+            },
+          }
         }}
       />
     </>
