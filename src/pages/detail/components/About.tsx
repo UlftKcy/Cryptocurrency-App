@@ -14,7 +14,6 @@ export default function About({uuid}:{uuid:string}) {
   }
 
   if (isError) {
-    console.log(error)
     return <span>Error: {error.message}</span>;
   }
 

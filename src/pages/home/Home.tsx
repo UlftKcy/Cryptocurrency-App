@@ -5,12 +5,12 @@ import { useAppSelector } from "../../hooks/redux";
 import { Tabs } from "antd";
 
 export default function Home() {
+  const favoriteCoins = useAppSelector(state => state.coins.favoriteCoins);
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["coins"],
     queryFn: fetchCoins,
   });
-  const favoriteCoins = useAppSelector(state => state.coins.favoriteCoins);
-
+  
   if (isLoading) {
     return <span>Loading...</span>;
   }
@@ -20,19 +20,17 @@ export default function Home() {
   }
 
   return (
-    <>
-      <Tabs defaultActiveKey="1" items={[
-        {
-          key: '1',
-          label: 'All',
-          children: <CoinTable data={data} />
-        },
-        {
-          key: '2',
-          label: 'Favorites',
-          children: <CoinTable data={favoriteCoins} />
-        },
-      ]} />
-    </>
+    <Tabs defaultActiveKey="1" items={[
+      {
+        key: '1',
+        label: 'All',
+        children: <CoinTable data={data} />
+      },
+      {
+        key: '2',
+        label: 'Favorites',
+        children: <CoinTable data={favoriteCoins} />
+      },
+    ]} />
   )
 }

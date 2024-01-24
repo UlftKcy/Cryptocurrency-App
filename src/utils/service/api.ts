@@ -47,3 +47,18 @@ export async function fetchCoinByHistory(uuid: string, timePeriod: string) {
     }
   }
 }
+
+export async function fetchSearchSuggestionCoins(query:string) {
+  try {
+    const res: AxiosResponse = await coinrankingAPI.get(`/search-suggestions?query=${query}`);
+    const coins: CoinType = res.data.data.coins;
+    return coins;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      handlingError(error);
+    } else {
+      // Diğer hatalar
+      console.error("Bir hata oluştu:", error);
+    }
+  }
+}

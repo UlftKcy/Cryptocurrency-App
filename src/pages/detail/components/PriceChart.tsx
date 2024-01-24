@@ -1,6 +1,6 @@
 import { Chart } from "react-chartjs-2";
 import { Divider, Flex, Radio } from "antd";
-import { Children, useState } from "react";
+import { Children, Fragment, useState } from "react";
 import { fetchCoinByHistory } from "../../../utils/service/api";
 import { useQuery } from "@tanstack/react-query";
 import { format, fromUnixTime } from 'date-fns';
@@ -43,9 +43,8 @@ export default function PriceChart({ uuid }: { uuid: string }) {
 
   const labels = data?.map((item) => format(fromUnixTime(Number(item.timestamp)), "HH:mm"));
 
-
   return (
-    <>
+    <Fragment>
       <Flex vertical gap="middle" align="center">
         <Radio.Group defaultValue={timePeriod} buttonStyle="solid">
           {Children.map(timePeriods, (timePeriodItem) => (
@@ -106,6 +105,6 @@ export default function PriceChart({ uuid }: { uuid: string }) {
           },
         }}
       />
-    </>
+    </Fragment>
   );
 }

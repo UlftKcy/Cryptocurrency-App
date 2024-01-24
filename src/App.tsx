@@ -1,8 +1,9 @@
-import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import CoinDetail from "./pages/detail/CoinDetail";
 import { Layout } from "antd";
 import { CSSProperties } from "react";
+import Navbar from "./components/Header/Navbar";
 
 const { Header, Content } = Layout;
 
@@ -30,9 +31,7 @@ function App() {
     <Layout style={layoutStyle}>
       <Router>
         <Header style={headerStyle}>
-          <Link to="/" relative="path">
-            CoinRanking
-          </Link>
+         <Navbar/>
         </Header>
         <Content style={contentStyle}>
           <Routes>
