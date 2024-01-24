@@ -1,28 +1,26 @@
 import { useParams } from "react-router-dom";
 import Chart from "chart.js/auto";
-/* import {
+import {
   CategoryScale,
   Legend,
   LinearScale,
   Title,
   Tooltip,
   PointElement,
-} from "chart.js"; */
+} from "chart.js";
 import { Card } from "antd";
 import { useState } from "react";
 import PriceChart from "./components/PriceChart";
 import About from "./components/About";
-import annotationPlugin from 'chartjs-plugin-annotation';
 
 
 Chart.register(
-  annotationPlugin
- /*  Title,
+  Title,
   Tooltip,
   Legend,
   CategoryScale,
   LinearScale,
-  PointElement */
+  PointElement
 );
 
 const tabListNoTitle = [
