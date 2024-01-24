@@ -1,25 +1,17 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CoinType } from "../../types";
-import { fetchSearchSuggestionCoins } from "../../utils/service/api";
 
 type InitialState = {
     favoriteCoins : CoinType[];
-    searchSuggestionCoins:CoinType[];
     loading:boolean;
     error:boolean;
 }
 
 const initialState:InitialState = {
     favoriteCoins:[],
-    searchSuggestionCoins:[],
     loading:false,
     error:false,
 }
-
-export const getSearchSuggestionCoins = createAsyncThunk("search-suggestions/get",async(query:string)=>{
-    const data = await fetchSearchSuggestionCoins(query);
-    return data;
-})
 
 const coinSlice = createSlice({
     name:"coins",
@@ -35,21 +27,6 @@ const coinSlice = createSlice({
             }
         }
     },
-    extraReducers:(builder)=>{
-        builder.addCase(getSearchSuggestionCoins.pending,(state,action)=>{
-            state.loading = true;
-            state.error = false;
-        })
-        builder.addCase(getSearchSuggestionCoins.fulfilled,(state,action)=>{
-            state.searchSuggestionCoins = action.payload;
-            state.loading = false;
-            state.error = false;
-        })
-        builder.addCase(getSearchSuggestionCoins.rejected,(state,action)=>{
-            state.loading = false;
-            state.error = true;
-        })
-    }
 })
 
 export const {addFavorite} = coinSlice.actions;

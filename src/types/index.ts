@@ -19,3 +19,11 @@ export interface CoinHistoryType{
   price:string;
   timestamp: string;
 }
+
+export interface SearchSuggestionCoinType{
+  iconUrl: string;
+  name: string;
+  price: string;
+  symbol: string;
+  uuid: string;
+}

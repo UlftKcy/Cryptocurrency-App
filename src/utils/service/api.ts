@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { coinrankingAPI } from "./axios";
-import { CoinHistoryType, CoinType } from "../../types";
+import { CoinHistoryType, CoinType, SearchSuggestionCoinType } from "../../types";
 import { handlingError } from "./error";
 
 export async function fetchCoins() {
@@ -48,10 +48,11 @@ export async function fetchCoinByHistory(uuid: string, timePeriod: string) {
   }
 }
 
-export async function fetchSearchSuggestionCoins(query:string) {
+export async function fetchSearchSuggestionCoins(query:string,signal:AbortSignal) {
   try {
-    const res: AxiosResponse = await coinrankingAPI.get(`/search-suggestions?query=${query}`);
-    const coins: CoinType = res.data.data.coins;
+    const res: AxiosResponse = await coinrankingAPI.get(`/search-suggestions?query=${query}`,{signal});
+    const coins: SearchSuggestionCoinType[] = res.data.data.coins;
+    console.log(coins)
     return coins;
   } catch (error) {
     if (axios.isAxiosError(error)) {
