@@ -64,10 +64,10 @@ export default function Search() {
         open={isModalOpen}
         closeIcon={false}
         footer={[
-          <>
-          <Button onClick={handleClear}>Clear</Button>
+          <Fragment>
           <Button onClick={handleCancel}>Close</Button>
-          </>
+          <Button type="primary" onClick={handleClear}>Clear</Button>
+          </Fragment>
         ]}
       >
         <Input

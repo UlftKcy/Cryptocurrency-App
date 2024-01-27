@@ -48,5 +48,5 @@ export default function About({uuid}:{uuid:string}) {
       ),
     },
   ];
-  return <Descriptions bordered column={1} items={items} />;
+  return <Descriptions title={data.name} bordered column={1} items={items} />;
 }

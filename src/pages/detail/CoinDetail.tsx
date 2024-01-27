@@ -25,18 +25,18 @@ Chart.register(
 
 const tabListNoTitle = [
   {
-    key: "price",
-    label: "Price",
-  },
-  {
     key: "about",
     label: "About",
+  },
+  {
+    key: "price",
+    label: "Price",
   },
 ];
 
 export default function CoinDetail() {
   const { uuid } = useParams();
-  const [activeTabKey, setActiveTabKey] = useState<string>("price");
+  const [activeTabKey, setActiveTabKey] = useState<string>("about");
 
   const onTab1Change = (key: string) => {
     setActiveTabKey(key);
@@ -51,8 +51,8 @@ export default function CoinDetail() {
       onTabChange={onTab1Change}
       hoverable
     >
-      {(activeTabKey === "price" && uuid) && <PriceChart uuid={uuid} />}
       {(activeTabKey === "about" && uuid) && <About uuid={uuid} />}
+      {(activeTabKey === "price" && uuid) && <PriceChart uuid={uuid} />}
     </Card>
   );
 }
