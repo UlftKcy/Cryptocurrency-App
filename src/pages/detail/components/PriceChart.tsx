@@ -1,68 +1,11 @@
 import { Chart } from "react-chartjs-2";
-import { Divider, Flex, Radio } from "antd";
+import { Divider, Flex, Radio, Spin } from "antd";
 import { Fragment, useState } from "react";
 import { fetchCoinByHistory } from "../../../utils/service/api";
 import { useQuery } from "@tanstack/react-query";
 import { format, fromUnixTime } from "date-fns";
-
-type TimePeriodsType = {
-  period: string;
-  time: string;
-  timeFormat:string;
-};
-
-const timePeriods: TimePeriodsType[] = [
-  {
-    period: "1h",
-    time:"hour",
-    timeFormat: "HH:mm",
-  },
-  {
-    period: "3h",
-    time:"hour",
-    timeFormat: "HH:mm",
-  },
-  {
-    period: "12h",
-    time:"hour",
-    timeFormat: "HH:mm",
-  },
-  {
-    period: "24h",
-    time:"hour",
-    timeFormat: "HH:mm",
-  },
-  {
-    period: "7d",
-    time:"day",
-    timeFormat: "LLL d",
-  },
-  {
-    period: "30d",
-    time:"day",
-    timeFormat: "LLL d",
-  },
-  {
-    period: "3m",
-    time: "month",
-    timeFormat: "d LLL",
-  },
-  {
-    period: "1y",
-    time: "year",
-    timeFormat: "d LLL",
-  },
-  {
-    period: "3y",
-    time:"year",
-    timeFormat: "LLL yy",
-  },
-  {
-    period: "5y",
-    time:"year",
-    timeFormat: "yyyy",
-  },
-];
+import { timePeriods } from "../../../constants/timePeriod";
+import { TimePeriodsType } from "../../../types";
 
 export default function PriceChart({ uuid }: { uuid: string }) {
   const [timePeriod, setTimePeriod] = useState(timePeriods[3]);
@@ -75,7 +18,7 @@ export default function PriceChart({ uuid }: { uuid: string }) {
   });
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Flex justify="center"><Spin size="large" /></Flex>;
   }
 
   if (isError) {
@@ -85,10 +28,6 @@ export default function PriceChart({ uuid }: { uuid: string }) {
   if (!data) {
     return;
   }
-
-  const labels = data?.map((item) =>
-    format(fromUnixTime(Number(item.timestamp)), timePeriod.timeFormat)
-  );
 
   return (
     <Fragment>
@@ -112,7 +51,9 @@ export default function PriceChart({ uuid }: { uuid: string }) {
       <Chart
         type="line"
         data={{
-          /*  labels: labels, */
+          labels: data?.map((item) =>
+            format(fromUnixTime(Number(item.timestamp)), timePeriod.timeFormat)
+          ),
           datasets: [
             {
               data: data.map((item) => item.price),
@@ -132,7 +73,6 @@ export default function PriceChart({ uuid }: { uuid: string }) {
             x: {
               reverse: true,
               type: "category",
-              labels: labels,
               stack: "center",
               ticks: {
                 font: {

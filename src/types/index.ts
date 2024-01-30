@@ -27,3 +27,9 @@ export interface SearchSuggestionCoinType{
   symbol: string;
   uuid: string;
 }
+
+export interface TimePeriodsType{
+  period: string;
+  time: string;
+  timeFormat:string;
+}

@@ -3,6 +3,7 @@ import { fetchCoins } from "../../utils/service/api";
 import CoinTable from "./components/CoinTable";
 import { useAppSelector } from "../../hooks/redux";
 import { Tabs } from "antd";
+import HomeLoading from "./components/HomeLoading";
 
 export default function Home() {
   const favoriteCoins = useAppSelector(state => state.coins.favoriteCoins);
@@ -13,7 +14,7 @@ export default function Home() {
   });
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <HomeLoading/>;
   }
 
   if (isError) {
