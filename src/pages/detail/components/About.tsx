@@ -2,11 +2,12 @@ import { Descriptions } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinByUuid } from "../../../utils/service/api";
 
-export default function About({uuid}:{uuid:string}) {
+export default function About({ uuid }: { uuid: string }) {
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["coinAbout", uuid],
     queryFn: () => fetchCoinByUuid(uuid as string),
     enabled: !!uuid,
+    staleTime: 6 * 50 * 1000
   });
 
   if (isLoading) {

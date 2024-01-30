@@ -71,8 +71,7 @@ export default function PriceChart({ uuid }: { uuid: string }) {
     queryFn: () =>
       fetchCoinByHistory(uuid as string, timePeriod.period as string),
     enabled: !!uuid && !!timePeriod,
-    staleTime: 10000,
-    refetchInterval: 10000,
+    refetchInterval: 10 * 1000,
   });
 
   if (isLoading) {

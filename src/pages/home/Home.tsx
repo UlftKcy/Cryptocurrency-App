@@ -9,8 +9,9 @@ export default function Home() {
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["coins"],
     queryFn: fetchCoins,
+    refetchInterval: 10 * 1000,
   });
-  
+
   if (isLoading) {
     return <span>Loading...</span>;
   }
